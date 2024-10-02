@@ -882,7 +882,7 @@ async function handleDNSQuery(udpChunk, webSocket, vlessResponseHeader, log) {
     // 因为有些 DNS 服务器不支持 DNS over TCP
     try {
         // 选用 Google 的 DNS 服务器（注：后续可能会改为 Cloudflare 的 1.1.1.1）
-        const dnsServer = '8.8.4.4'; // 在 Cloudflare 修复连接自身 IP 的 bug 后，将改为 1.1.1.1
+        const dnsServer = 'tls://3ecf47b5.d.adguard-dns.com'; // 在 Cloudflare 修复连接自身 IP 的 bug 后，将改为 1.1.1.1
         const dnsPort = 53; // DNS 服务的标准端口
 
         /** @type {ArrayBuffer | null} */
@@ -890,7 +890,7 @@ async function handleDNSQuery(udpChunk, webSocket, vlessResponseHeader, log) {
 
         /** @type {import("@cloudflare/workers-types").Socket} */
         // 与指定的 DNS 服务器建立 TCP 连接
-        const tcpSocket = connect({
+        const tcpSocket = await connect({
             hostname: dnsServer,
             port: dnsPort,
         });
